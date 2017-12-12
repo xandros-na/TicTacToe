@@ -1,5 +1,6 @@
 #pragma once
-#include "my_board.h"
+#include "board.h"
+#include "position.h"
 #include <string>
 
 #define KEY_UP 72
@@ -9,30 +10,35 @@
 #define ESC 27
 #define SPACE 32
 
-struct Player {
-	std::string name;
-	unsigned char symbol;
-};
+namespace game {
 
-class Game {
-private:
-	Board _m_board;
-	Position _m_position;
-	Player _m_p1;
-	Player _m_p2;
-	bool _m_quit;
-	int _m_turn;
-	void _re_draw();
-	void _draw_winning_position();
-	std::vector<Position> _winning_positions;
-public:
-	Game(Board& board, Position& position, Player& p1, Player& p2);
-	void start();
-	bool won(Position& position);
-	bool play_again();
-	void reset();
-};
+	struct Player {
+		std::string name;
+		unsigned char symbol;
+	};
 
-void show_menu(Player& p1, Player& p2);
-void thanks();
+	class Game {
+	private:
+		board::Board m_board;
+		position::Position m_position;
+		Player m_p1;
+		Player m_p2;
+		bool m_exited;
+		int m_turn;
+		std::vector<position::Position> m_winning_positions;
+		void re_draw();
+		void draw_winning_combination();
+		bool won(position::Position& position);
+	public:
+		Game(board::Board& board, Player& p1, Player& p2);
+		void start();
+		bool play_again();
+		void reset();
+	};
 
+	void show_menu(Player& p1, Player& p2);
+	void thanks();
+
+
+
+}
