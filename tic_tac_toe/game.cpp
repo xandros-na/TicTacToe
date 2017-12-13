@@ -35,31 +35,31 @@ namespace game {
 
 			switch ((c = _getch())) {
 			case KEY_UP:
-				m_position.x--;
-				re_draw();
-				break;
-			case KEY_DOWN:
-				m_position.x++;
-				re_draw();
-				break;
-			case KEY_LEFT:
 				m_position.y--;
 				re_draw();
 				break;
-			case KEY_RIGHT:
+			case KEY_DOWN:
 				m_position.y++;
+				re_draw();
+				break;
+			case KEY_LEFT:
+				m_position.x--;
+				re_draw();
+				break;
+			case KEY_RIGHT:
+				m_position.x++;
 				re_draw();
 				break;
 			case SPACE:
 				if (m_turn == 0) {
 					if (m_board.is_empty(m_position)) {
-						m_board[m_position.y][m_position.x] = m_p1.symbol;
+						m_board[m_position.x][m_position.y] = m_p1.symbol;
 						m_turn = 1;
 					}
 				}
 				else {
 					if (m_board.is_empty(m_position)) {
-						m_board[m_position.y][m_position.x] = m_p2.symbol;
+						m_board[m_position.x][m_position.y] = m_p2.symbol;
 						m_turn = 0;
 					}
 				}
@@ -132,15 +132,15 @@ namespace game {
 			return false;
 		}
 
-		char c = m_board[position.y][position.x];
+		char c = m_board[position.x][position.y];
 
 		// check vertically
 		int matches = 0;
 		m_winning_positions = {};
 		for (int i = 0; i < m_board.m_height; i++) {
-			if (c == m_board[position.y][i]) {
+			if (c == m_board[position.x][i]) {
 				matches++;
-				position::Position p = { position.y, i };
+				position::Position p = { position.x, i };
 				m_winning_positions.push_back(p);
 			}
 		}
@@ -154,9 +154,9 @@ namespace game {
 		matches = 0;
 		m_winning_positions = {};
 		for (int i = 0; i < m_board.m_width; i++) {
-			if (c == m_board[i][position.x]) {
+			if (c == m_board[i][position.y]) {
 				matches++;
-				position::Position p = { i, position.x };
+				position::Position p = { i, position.y };
 				m_winning_positions.push_back(p);
 			}
 		}

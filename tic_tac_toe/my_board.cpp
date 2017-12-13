@@ -35,10 +35,10 @@ namespace board {
 		std::cout << std::endl;
 	}
 
-	void Board::draw_symbol(int i, int j, int k, int x) {
+	void Board::draw_symbol(int i, int j, int x, int y) {
 
 		// if board at current position has the char and current position is middle
-		auto ch = ((m_board[k][x] != ' ') && (i == SQUARE_LENGTH / 2) && (j == SQUARE_WIDTH / 2)) ? m_board[k][x] : ' ';
+		auto ch = ((m_board[x][y] != ' ') && (i == SQUARE_LENGTH / 2) && (j == SQUARE_WIDTH / 2)) ? m_board[x][y] : ' ';
 		std::cout << ch;
 	}
 
@@ -99,7 +99,7 @@ namespace board {
 				for (int k = 0; k < m_width; k++) {
 					std::cout << "+";
 					for (int i = 0; i < SQUARE_LENGTH; i++) {
-						if (position.y == k && h == position.x) {
+						if (position.x == k && h == position.y) {
 							if ((j == 0 || j == SQUARE_WIDTH - 1) || (i == 0 || i == SQUARE_LENGTH - 1)) {
 								std::cout << "`";
 							}
@@ -119,7 +119,7 @@ namespace board {
 	}
 
 	bool Board::is_empty(position::Position& position) {
-		return (m_board[position.y][position.x] == ' ');
+		return (m_board[position.x][position.y] == ' ');
 	}
 
 	bool Board::is_full() {
