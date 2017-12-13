@@ -13,10 +13,12 @@ namespace board {
 		void draw_outer();
 		void draw_symbol(int i, int j, int k, int x);
 		void bounds_check(position::Position& position);
-	public:
 		int m_width;
 		int m_height;
+	public:
 		Board(int width, int height);
+		int get_width();
+		int get_height();
 		int size();
 		std::vector<char>& operator[](int);
 		void re_draw(position::Position& position);

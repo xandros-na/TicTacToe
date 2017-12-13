@@ -10,7 +10,7 @@ int main() {
 	position::Position position = { 0, 0 };
 	game::show_menu(p1, p2);
 
-	game::Game tic_tac_toe = game::Game(my_board, p1, p2);
+	game::TicTacToe tic_tac_toe = game::TicTacToe(my_board, p1, p2);
 	tic_tac_toe.start();
 	
 	while (tic_tac_toe.play_again()) {

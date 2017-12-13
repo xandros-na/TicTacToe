@@ -17,7 +17,7 @@ namespace game {
 		unsigned char symbol;
 	};
 
-	class Game {
+	class TicTacToe {
 	private:
 		board::Board m_board;
 		position::Position m_position;
@@ -30,7 +30,7 @@ namespace game {
 		void draw_winning_combination();
 		bool won(position::Position& position);
 	public:
-		Game(board::Board& board, Player& p1, Player& p2);
+		TicTacToe(board::Board& board, Player& p1, Player& p2);
 		void start();
 		bool play_again();
 		void reset();

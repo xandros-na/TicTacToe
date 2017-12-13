@@ -27,6 +27,14 @@ namespace board {
 		return m_height;
 	}
 
+	int Board::get_height() {
+		return m_height;
+	}
+
+	int Board::get_width() {
+		return m_width;
+	}
+
 	void Board::draw_outer() {
 		std::cout << "+";
 		for (int i = 0; i < 8 * m_width; i++) {

@@ -4,18 +4,21 @@
 #include <string>
 #include <chrono>
 #include <thread>
+#include <assert.h>
 
 namespace game {
 
-	Game::Game(board::Board& board, Player& p1, Player& p2) : m_board{ board }, m_p1{ p1.name, p1.symbol }, m_p2{ p2.name, p2.symbol }
+	TicTacToe::TicTacToe(board::Board& board, Player& p1, Player& p2) : m_board{ board }, m_p1{ p1.name, p1.symbol }, m_p2{ p2.name, p2.symbol }
 	{
+		assert(m_board.get_height() == 3 && m_board.get_width() == 3);
+
 		m_position = { 0, 0 };
 		m_turn = 0;
 		m_exited = false;
 		m_winning_positions = {};
 	};
 
-	void Game::re_draw() {
+	void TicTacToe::re_draw() {
 		std::system("CLS");
 		m_board.re_draw(m_position);
 
@@ -25,7 +28,7 @@ namespace game {
 		}
 	}
 
-	void Game::start() {
+	void TicTacToe::start() {
 		int c = 0;
 		re_draw();
 
@@ -74,7 +77,7 @@ namespace game {
 		}
 	}
 
-	bool Game::play_again() {
+	bool TicTacToe::play_again() {
 
 		if (m_exited) {
 			return false;
@@ -112,7 +115,7 @@ namespace game {
 		}
 	}
 
-	void Game::reset() {
+	void TicTacToe::reset() {
 		m_board.make_empty();
 		m_position.x = 0;
 		m_position.y = 0;
@@ -121,12 +124,12 @@ namespace game {
 		m_position = { 0, 0 };
 	}
 
-	void Game::draw_winning_combination() {
+	void TicTacToe::draw_winning_combination() {
 		std::system("CLS");
 		m_board.re_draw(m_winning_positions);
 	}
 
-	bool Game::won(position::Position& position) {
+	bool TicTacToe::won(position::Position& position) {
 
 		if (m_board.is_empty(position)) {
 			return false;
@@ -137,7 +140,7 @@ namespace game {
 		// check vertically
 		int matches = 0;
 		m_winning_positions = {};
-		for (int i = 0; i < m_board.m_height; i++) {
+		for (int i = 0; i < m_board.size(); i++) {
 			if (c == m_board[position.x][i]) {
 				matches++;
 				position::Position p = { position.x, i };
@@ -153,7 +156,7 @@ namespace game {
 		//check horizontally
 		matches = 0;
 		m_winning_positions = {};
-		for (int i = 0; i < m_board.m_width; i++) {
+		for (int i = 0; i < m_board.size(); i++) {
 			if (c == m_board[i][position.y]) {
 				matches++;
 				position::Position p = { i, position.y };
@@ -167,11 +170,11 @@ namespace game {
 
 		// check diagonal
 		/*
-		\
+		upper left to lower right \
 		*/
 		matches = 0;
 		m_winning_positions = {};
-		for (int i = 0; i < m_board.m_width; i++) {
+		for (int i = 0; i < m_board.size(); i++) {
 			if (c == m_board[i][i]) {
 				matches++;
 				position::Position p = { i, i };
@@ -185,12 +188,12 @@ namespace game {
 
 		// check diagonal
 		/*
-		/
+		lower left to upper right /
 		*/
 		matches = 0;
 		m_winning_positions = {};
 		int j = 0;
-		for (int i = m_board.m_width - 1; i > -1; i--) {
+		for (int i = m_board.size() - 1; i > -1; i--) {
 			if (c == m_board[j][i]) {
 				matches++;
 				position::Position p = { j, i };
